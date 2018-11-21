@@ -1,21 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button
+} from "reactstrap";
 
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import Calendario from '../calendario/Calendario';
-import Horarios from '../horarios/Horarios';
+import Calendario from "../calendario/Calendario";
+import Horarios from "../horarios/Horarios";
 
 import PropTypes from "prop-types";
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class Servico extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +45,7 @@ class Servico extends Component {
     setTimeout(() => {
       this.setState({
         isLoading: false
-      })
+      });
     }, 800);
   }
 
@@ -49,7 +53,12 @@ class Servico extends Component {
     return (
       <div>
         <Card>
-          <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+          <CardImg
+            top
+            width="300px"
+            src={this.props.imagem}
+            alt="Card image cap"
+          />
           <CardBody>
             <CardTitle>{this.props.nome}</CardTitle>
             <CardSubtitle>{"R$" + this.props.preco}</CardSubtitle>
@@ -67,27 +76,29 @@ class Servico extends Component {
                 <Calendario onSelect={this.setLoading} />
               </div>
               <div className="col-6">
-                {this.state.isLoading && <div>Buscando horários para esse dia.....</div>}
+                {this.state.isLoading && (
+                  <div>Buscando horários para esse dia.....</div>
+                )}
                 {!this.state.isLoading && <Horarios />}
               </div>
             </div>
           </ModalBody>
-          <ModalFooter>
-          </ModalFooter>
+          <ModalFooter />
         </Modal>
       </div>
-    )
+    );
   }
 }
 
 Servico.propTypes = {
   id: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
+  imagem: PropTypes.string,
   preco: PropTypes.number.isRequired,
   tipo: PropTypes.string.isRequired,
   horario: PropTypes.instanceOf(Date),
   descricao: PropTypes.string.isRequired,
-  apelido: PropTypes.string,
+  apelido: PropTypes.string
 };
 
 export default Servico;
